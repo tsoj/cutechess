@@ -74,7 +74,6 @@ void ChessPlayer::newGame(Chess::Side side, ChessPlayer* opponent, Chess::Board*
 
 void ChessPlayer::endGame(const Chess::Result& result)
 {
-	Q_UNUSED(result);
 	if (m_state != Observing && m_state != Thinking)
 		return;
 
@@ -261,6 +260,13 @@ void ChessPlayer::claimResult(const Chess::Result& result)
 
 void ChessPlayer::forfeit(Chess::Result::Type type, const QString& description)
 {
+
+	if (type == Chess::Result::IllegalMove ||
+		type == Chess::Result::Disconnection ||
+		type == Chess::Result::StalledConnection
+	)
+		emit debugOnCrashMessage(m_protocolHistory);
+
 	if (m_side.isNull())
 	{
 		claimResult(Chess::Result(type, m_side, description));
@@ -302,7 +308,6 @@ void ChessPlayer::kill()
 
 void ChessPlayer::onCrashed()
 {
-	emit debugOnCrashMessage(m_protocolHistory);
 	kill();
 	forfeit(Chess::Result::Disconnection);
 }
