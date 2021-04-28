@@ -30,6 +30,7 @@ EngineMatch::EngineMatch(Tournament* tournament, QObject* parent)
 	: QObject(parent),
 	  m_tournament(tournament),
 	  m_debug(false),
+	  m_debugOnCrash(false),
 	  m_ratingInterval(0),
 	  m_bookMode(OpeningBook::Ram)
 {
@@ -75,6 +76,9 @@ void EngineMatch::start()
 	if (m_debug)
 		connect(m_tournament->gameManager(), SIGNAL(debugMessage(QString)),
 			this, SLOT(print(QString)));
+	if (m_debugOnCrash)
+		connect(m_tournament->gameManager(), SIGNAL(debugOnCrashMessage(QString)),
+			this, SLOT(print(QString)));
 
 	QMetaObject::invokeMethod(m_tournament, "start", Qt::QueuedConnection);
 }
@@ -87,6 +91,11 @@ void EngineMatch::stop()
 void EngineMatch::setDebugMode(bool debug)
 {
 	m_debug = debug;
+}
+
+void EngineMatch::setDebugOnCrashMode(bool debugOnCrash)
+{
+	m_debugOnCrash = debugOnCrash;
 }
 
 void EngineMatch::setRatingInterval(int interval)

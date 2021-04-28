@@ -60,6 +60,7 @@ void ChessPlayer::newGame(Chess::Side side, ChessPlayer* opponent, Chess::Board*
 	Q_ASSERT(isReady());
 	Q_ASSERT(m_state != Disconnected);
 
+	m_protocolHistory = "";
 	m_claimedResult = false;
 	m_eval.clear();
 	m_opponent = opponent;
@@ -288,6 +289,11 @@ void ChessPlayer::emitMove(const Chess::Move& move)
 	emit moveMade(move);
 }
 
+void ChessPlayer::addToProtocolHistory(const QString& line)
+{
+	m_protocolHistory += line + "\n";
+}
+
 void ChessPlayer::kill()
 {
 	setState(Disconnected);
@@ -296,6 +302,7 @@ void ChessPlayer::kill()
 
 void ChessPlayer::onCrashed()
 {
+	emit debugOnCrashMessage(m_protocolHistory);
 	kill();
 	forfeit(Chess::Result::Disconnection);
 }

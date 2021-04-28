@@ -293,7 +293,7 @@ void EngineConfigurationDialog::detectEngineOptions()
 
 	EngineBuilder builder(engineConfiguration());
 	QString error;
-	m_engine = qobject_cast<ChessEngine*>(builder.create(nullptr, nullptr, this, &error));
+	m_engine = qobject_cast<ChessEngine*>(builder.create(nullptr, nullptr, nullptr, this, &error));
 
 	if (m_engine != nullptr)
 	{

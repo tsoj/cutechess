@@ -224,6 +224,7 @@ class LIB_EXPORT ChessPlayer : public QObject
 
 		/*! Signals a debugging message from the player. */
 		void debugMessage(const QString& data);
+		void debugOnCrashMessage(const QString& data);
 
 		/*! Emitted when player's name is changed. */
 		void nameChanged(const QString& name);
@@ -288,6 +289,8 @@ class LIB_EXPORT ChessPlayer : public QObject
 
 		/*! Sets the current error to \a error. */
 		void setError(const QString& error);
+
+		void addToProtocolHistory(const QString& line);
 		
 		/*!
 		 * Move evaluation for the current move.
@@ -312,6 +315,7 @@ class LIB_EXPORT ChessPlayer : public QObject
 		Chess::Side m_side;
 		Chess::Board* m_board;
 		ChessPlayer* m_opponent;
+		QString m_protocolHistory;
 };
 
 #endif // CHESSPLAYER_H

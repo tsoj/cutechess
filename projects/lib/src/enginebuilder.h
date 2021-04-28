@@ -37,6 +37,7 @@ class LIB_EXPORT EngineBuilder : public PlayerBuilder
 		virtual bool isHuman() const;
 		virtual ChessPlayer* create(QObject* receiver,
 					    const char* method,
+						const char* debugOnCrashMethod,
 					    QObject* parent,
 					    QString* error) const;
 

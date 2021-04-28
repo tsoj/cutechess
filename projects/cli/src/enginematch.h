@@ -40,6 +40,7 @@ class EngineMatch : public QObject
 
 		OpeningBook* addOpeningBook(const QString& fileName);
 		void setDebugMode(bool debug);
+		void setDebugOnCrashMode(bool debugOnCrash);
 		void setRatingInterval(int interval);
 		void setBookMode(OpeningBook::AccessMode mode);
 
@@ -60,6 +61,7 @@ class EngineMatch : public QObject
 
 		Tournament* m_tournament;
 		bool m_debug;
+		bool m_debugOnCrash;
 		int m_ratingInterval;
 		OpeningBook::AccessMode m_bookMode;
 		QMap<QString, OpeningBook*> m_books;

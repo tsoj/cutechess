@@ -139,7 +139,7 @@ void GameInitializer::initializeGame()
 		{
 			QString error;
 			m_player[i] = m_builder[i]->create(thread()->parent(),
-							   SIGNAL(debugMessage(QString)),
+							   SIGNAL(debugMessage(QString)),SIGNAL(debugOnCrashMessage(QString)),
 							   this, &error);
 			m_game->setError(error);
 

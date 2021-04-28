@@ -432,10 +432,15 @@ void ChessEngine::write(const QString& data, WriteMode mode)
 	}
 
 	Q_ASSERT(m_ioDevice->isWritable());
-	emit debugMessage(QString(">%1(%2): %3")
-			  .arg(name())
-			  .arg(m_id)
-			  .arg(data));
+
+	const auto s = QString(">%1(%2): %3")
+		.arg(name())
+		.arg(m_id)
+		.arg(data);
+
+	addToProtocolHistory(s);
+
+	emit debugMessage(s);
 
 	if (m_ioDevice->write(data.toLatin1() + "\n") == -1)
 		qWarning("Writing to engine %s(%d) failed",
@@ -456,10 +461,14 @@ void ChessEngine::onReadyRead(int channel)
 		if (line.isEmpty())
 			continue;
 
-		emit debugMessage(QString("<%1(%2): %3")
-				  .arg(name())
-				  .arg(m_id)
-				  .arg(line));
+		const auto s = QString(">%1(%2): %3")
+			.arg(name())
+			.arg(m_id)
+			.arg(line);
+
+		addToProtocolHistory(s);
+
+		emit debugMessage(s);
 		parseLine(line);
 
 		if (m_idleTimer->isActive())

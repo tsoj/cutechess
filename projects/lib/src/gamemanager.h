@@ -182,6 +182,7 @@ class LIB_EXPORT GameManager : public QObject
 		void finished();
 		/*! This signal redirects the ChessPlayer::debugMessage() signal. */
 		void debugMessage(const QString& data);
+		void debugOnCrashMessage(const QString& data);
 
 	private slots:
 		void onThreadReady();

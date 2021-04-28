@@ -64,6 +64,7 @@ class LIB_EXPORT PlayerBuilder
 		 */
 		virtual ChessPlayer* create(QObject* receiver,
 					    const char* method,
+						const char* debugOnCrashMethod,
 					    QObject* parent,
 					    QString* error) const = 0;
 

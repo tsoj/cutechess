@@ -32,6 +32,7 @@ bool HumanBuilder::isHuman() const
 
 ChessPlayer* HumanBuilder::create(QObject *receiver,
 				  const char *method,
+				  const char* debugOnCrashMethod,
 				  QObject *parent,
 				  QString* error) const
 {

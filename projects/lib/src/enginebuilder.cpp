@@ -35,6 +35,7 @@ bool EngineBuilder::isHuman() const
 
 ChessPlayer* EngineBuilder::create(QObject* receiver,
 				   const char* method,
+				   const char* debugOnCrashMethod,
 				   QObject* parent,
 				   QString* error) const
 {
@@ -89,9 +90,15 @@ ChessPlayer* EngineBuilder::create(QObject* receiver,
 	Q_ASSERT(engine != nullptr);
 
 	engine->setParent(parent);
-	if (receiver != nullptr && method != nullptr)
-		QObject::connect(engine, SIGNAL(debugMessage(QString)),
-				 receiver, method);
+	if (receiver != nullptr)
+	{
+		if(method != nullptr)
+			QObject::connect(engine, SIGNAL(debugMessage(QString)),
+					receiver, method);		
+		if(debugOnCrashMethod != nullptr)
+			QObject::connect(engine, SIGNAL(debugOnCrashMessage(QString)),
+				 	receiver, debugOnCrashMethod);
+	}
 	engine->setDevice(process);
 	engine->applyConfiguration(m_config);
 

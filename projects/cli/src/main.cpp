@@ -258,6 +258,7 @@ EngineMatch* parseMatch(const QStringList& args, QObject* parent)
 	parser.addOption("-ratinginterval", QVariant::Int, 1, 1);
 	parser.addOption("-resultformat", QVariant::String, 1, 1);
 	parser.addOption("-debug", QVariant::Bool, 0, 0);
+	parser.addOption("-debugoncrash", QVariant::Bool, 0, 0);
 	parser.addOption("-openings", QVariant::StringList);
 	parser.addOption("-bookmode", QVariant::String);
 	parser.addOption("-pgnout", QVariant::StringList, 1, 3);
@@ -454,6 +455,12 @@ EngineMatch* parseMatch(const QStringList& args, QObject* parent)
 		{
 			QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
 			match->setDebugMode(true);
+		}
+		// Debugging on engine crash mode. Prints all engine input and output for a engine that crashed.
+		else if (name == "-debugoncrash")
+		{
+			QLoggingCategory::defaultCategory()->setEnabled(QtDebugMsg, true);
+			match->setDebugOnCrashMode(true);
 		}
 		// Use an opening suite
 		else if (name == "-openings")
